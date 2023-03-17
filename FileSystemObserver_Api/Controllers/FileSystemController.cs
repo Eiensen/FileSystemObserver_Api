@@ -17,13 +17,12 @@ namespace FileSystemObserver_Api.Controllers
         /// <summary>
         /// Запрос на получение всех папок и файлов. Путь по умолчанию: С:\
         /// </summary>
-        /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet]
         public IActionResult GetFilesInDefaultPath()
         {
-            var response = _service.GetFilesInDefaultPath();
+            var response = _service.GetAllFilesAndDirectoriesInDefaultPath();
 
             if (response == null)
             {
@@ -32,19 +31,38 @@ namespace FileSystemObserver_Api.Controllers
 
             return Ok(response);
         }
+
         /// <summary>
         /// Запрос на получение всех папок и файлов по заданному пути. Можно вернуться к предыдущей папке
         /// </summary>
         /// <param name="fullPath">Полный путь до файла или папки</param>
-        /// <param name="isToParent">true - возврат к предыдущей папке</param>
-        /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet]
         [Route("/api/[controller]/directory")]
-        public IActionResult GetFilesInDirectory(string fullPath, bool isToParent = false)
+        public IActionResult GetFilesInDirectory(string fullPath)
         {
-            var response = _service.GetFilesInDirectory(fullPath, isToParent);
+            var response = _service.GetAllFilesAndDirectoriesInCurrentPath(fullPath);
+
+            if (response == null)
+            {
+                return BadRequest("Path incorrect!");
+            }
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Запрос на получение всех папок и файлов в предыдущей папке от указанного пути.
+        /// </summary>
+        /// <param name="fullPath">Текущий полный путь</param>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet]
+        [Route("/api/[controller]/parent")]
+        public IActionResult GetFilesInParentDirectory(string fullPath)
+        {
+            var response = _service.GetAllFilesAndDirectoriesInParent(fullPath);
 
             if (response == null)
             {
