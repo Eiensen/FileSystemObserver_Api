@@ -37,7 +37,7 @@
 
             var directory = string.Empty;
 
-            A.CallTo(() => _service.GetAllFilesAndDirectoriesInCurrentPath(directory, false)).Returns(response);
+            A.CallTo(() => _service.GetAllFilesAndDirectoriesInCurrentPath(directory)).Returns(response);
 
             //Act
             var result = _controller.GetFilesInDirectory(directory);
