@@ -19,7 +19,7 @@
             //Arrenge
             var response = A.Fake<IEnumerable<FileView>>();
 
-            A.CallTo(() => _service.GetFilesInDefaultPath()).Returns(response);
+            A.CallTo(() => _service.GetAllFilesAndDirectoriesInDefaultPath()).Returns(response);
 
             //Act
             var result = _controller.GetFilesInDefaultPath();
@@ -37,7 +37,7 @@
 
             var directory = string.Empty;
 
-            A.CallTo(() => _service.GetFilesInDirectory(directory, false)).Returns(response);
+            A.CallTo(() => _service.GetAllFilesAndDirectoriesInCurrentPath(directory, false)).Returns(response);
 
             //Act
             var result = _controller.GetFilesInDirectory(directory);

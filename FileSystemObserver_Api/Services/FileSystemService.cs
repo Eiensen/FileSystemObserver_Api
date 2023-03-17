@@ -1,4 +1,6 @@
-﻿namespace FileSystemObserver_Api.Services
+﻿using FileSystemObserver_Api.Handlers;
+
+namespace FileSystemObserver_Api.Services
 {
     public class FileSystemService : IFileSystemService
     {
@@ -6,121 +8,59 @@
 
         public FileSystemService(IConfiguration configuration)
         {
-            _configuration = configuration;         
+            _configuration = configuration;
         }
 
-        public IEnumerable<FileView> GetFilesInDefaultPath()
+        public IEnumerable<FileView> GetAllFilesAndDirectoriesInDefaultPath()
         {
             var defaultPath = _configuration.GetSection("defaultPath").Value;
 
-            if(!String.IsNullOrEmpty(defaultPath))
+            if (!String.IsNullOrEmpty(defaultPath))
             {
-                var directory = new DirectoryInfo(defaultPath);
+                var handler = new FilesAndDirectoriesInCurrentPath(defaultPath);
 
-                var files = GetAllFilesInPath(directory);
+                var files = handler.GetAllFilesAndDirectories();
 
                 return files;
             }
-            
+
             return null;
         }
 
-        public IEnumerable<FileView> GetFilesInDirectory(string dirPath, bool isToParent)
+        public IEnumerable<FileView> GetAllFilesAndDirectoriesInCurrentPath(string dirPath)
         {
-            if (isToParent)
+            var handler = new FilesAndDirectoriesInCurrentPath(dirPath);
+
+            if (handler != null)
             {
-                var directory = new DirectoryInfo(dirPath).Parent;
-
-                if(directory != null)
-                {
-                    return GetAllFilesInPath(directory);
-                }
-
-                return null;
+                return handler.GetAllFilesAndDirectories();
             }
-            else
+
+            return null;
+        }
+
+        public IEnumerable<FileView> GetAllFilesAndDirectoriesInParent(string dirPath)
+        {
+            var handler = new FilesAndDirectoriesInParentDirectory(dirPath);
+
+            if (handler != null)
             {
-                var directory = new DirectoryInfo(dirPath);
-
-                if(directory != null)
-                {
-                    return GetAllFilesInPath(directory);
-                }
-
-                return null;
+                return handler.GetAllFilesAndDirectories();
             }
+
+            return null;
         }
 
         public IEnumerable<FileView> GetFilteredListOfFiles(string dirPath, string filter)
         {
-            var directory = new DirectoryInfo(dirPath);
+            var handler = new FilteredFilesInCurrentPath(dirPath, filter);
 
-            if (directory != null)
+            if (handler != null)
             {
-                return FilteredFiles(directory, filter);
+                return handler.GetAllFilesAndDirectories();
             }
 
             return null;
-        }
-
-        private IEnumerable<FileView> GetAllFilesInPath(DirectoryInfo dirInfo)
-        {
-            var files = new List<FileView>();
-
-            try
-            {
-                if (!dirInfo.Exists)
-                {
-                    return null;
-                }
-
-                foreach (var dir in dirInfo.GetDirectories())
-                {
-                    files.Add(new FileView() { FullName = dir.FullName, Name = dir.Name });
-                }
-
-                foreach (var file in dirInfo.GetFiles())
-                {
-                    files.Add(new FileView() { FullName = file.FullName, Name = file.Name });
-                }
-
-                return files;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        private IEnumerable<FileView> FilteredFiles(DirectoryInfo dirInfo, string filterBy)
-        {
-            var files = new List<FileView>();
-
-            try
-            {
-                if (!dirInfo.Exists)
-                {
-                    return null;
-                }
-                
-                foreach (var file in dirInfo.EnumerateFiles($"*.{filterBy}"))
-                {
-                    files.Add(new FileView() { FullName = file.FullName, Name = file.Name });
-                }
-
-                if(files.Count > 0)
-                {
-                    return files;
-                }
-                else
-                {
-                    return null;
-                }                
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
         }
     }
 }

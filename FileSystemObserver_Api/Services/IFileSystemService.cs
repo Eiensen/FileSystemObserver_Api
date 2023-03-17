@@ -4,9 +4,11 @@ namespace FileSystemObserver_Api.Services
 {
     public interface IFileSystemService
     {
-        IEnumerable<FileView> GetFilesInDefaultPath();
+        IEnumerable<FileView> GetAllFilesAndDirectoriesInDefaultPath();
 
-        IEnumerable<FileView> GetFilesInDirectory(string dirPath, bool isToParent);
+        IEnumerable<FileView> GetAllFilesAndDirectoriesInCurrentPath(string dirPath);
+
+        IEnumerable<FileView> GetAllFilesAndDirectoriesInParent(string dirPath);
 
         IEnumerable<FileView> GetFilteredListOfFiles(string dirPath, string filter);
     }
