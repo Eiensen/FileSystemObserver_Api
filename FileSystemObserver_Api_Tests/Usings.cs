@@ -5,3 +5,4 @@ global using FileSystemObserver_Api.Services;
 global using FileSystemObserver_Api.ViewModels;
 global using FluentAssertions;
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.Extensions.Configuration;

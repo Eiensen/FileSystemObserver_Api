@@ -6,18 +6,20 @@ namespace FileSystemObserver_Api.Services
     {
         private readonly IConfiguration _configuration;
 
+        private readonly string _defaultPath;
+
         public FileSystemService(IConfiguration configuration)
         {
             _configuration = configuration;
+
+            _defaultPath = _configuration.GetSection("defaultPath").Value;
         }
 
         public IEnumerable<FileView> GetAllFilesAndDirectoriesInDefaultPath()
-        {
-            var defaultPath = _configuration.GetSection("defaultPath").Value;
-
-            if (!String.IsNullOrEmpty(defaultPath))
+        {           
+            if (!String.IsNullOrEmpty(_defaultPath))
             {
-                var handler = new FilesAndDirectoriesInCurrentPath(defaultPath);
+                var handler = new FilesAndDirectoriesInCurrentPath(_defaultPath);
 
                 var files = handler.GetAllFilesAndDirectories();
 
@@ -33,7 +35,9 @@ namespace FileSystemObserver_Api.Services
 
             if (handler != null)
             {
-                return handler.GetAllFilesAndDirectories();
+                var files =  handler.GetAllFilesAndDirectories();
+
+                return files;
             }
 
             return null;
@@ -45,7 +49,9 @@ namespace FileSystemObserver_Api.Services
 
             if (handler != null)
             {
-                return handler.GetAllFilesAndDirectories();
+                var files = handler.GetAllFilesAndDirectories();
+
+                return files;
             }
 
             return null;
@@ -57,7 +63,9 @@ namespace FileSystemObserver_Api.Services
 
             if (handler != null)
             {
-                return handler.GetAllFilesAndDirectories();
+                var files = handler.GetAllFilesAndDirectories();
+
+                return files;
             }
 
             return null;
