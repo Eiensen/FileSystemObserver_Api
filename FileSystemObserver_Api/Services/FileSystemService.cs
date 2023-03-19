@@ -1,6 +1,4 @@
-﻿using FileSystemObserver_Api.Handlers;
-
-namespace FileSystemObserver_Api.Services
+﻿namespace FileSystemObserver_Api.Services
 {
     public class FileSystemService : IFileSystemService
     {

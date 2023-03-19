@@ -1,48 +1,73 @@
 global using FileSystemObserver_Api.Services;
 global using FileSystemObserver_Api.ViewModels;
 global using Microsoft.AspNetCore.Mvc;
+global using FileSystemObserver_Api.Handlers;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using NLog.Web;
+using NLog;
+using System;
 
-var builder = WebApplication.CreateBuilder(args);
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
-// Add services to the container.
+logger.Debug("init main");
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
+try
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
+    var builder = WebApplication.CreateBuilder(args);
+
+    // Add services to the container.
+
+    builder.Services.AddControllers();
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen(c =>
     {
-        Version = "v1",
-        Title = "File System Obsrver Web API",
-        Description = "Symple Web Api for viewing file system in some path.",
+        c.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Version = "v1",
+            Title = "File System Obsrver Web API",
+            Description = "Symple Web Api for viewing file system in some path.",
+        });
+
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        c.IncludeXmlComments(xmlPath);
     });
 
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
-});
+    builder.Configuration.AddJsonFile("config.json");
 
-builder.Configuration.AddJsonFile("config.json");
+    builder.Services.AddTransient<IFileSystemService, FileSystemService>();
 
-builder.Services.AddTransient<IFileSystemService, FileSystemService>();
+    builder.Logging.ClearProviders();
 
-var app = builder.Build();
+    builder.Host.UseNLog();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.UseExceptionHandler("/error-development");
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        app.UseExceptionHandler("/error-development");
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
 }
+catch(Exception ex)
+{
+    logger.Error(ex, "Stopped program because of exception");
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+    throw;
+}
+finally
+{
+    LogManager.Shutdown();
+}
