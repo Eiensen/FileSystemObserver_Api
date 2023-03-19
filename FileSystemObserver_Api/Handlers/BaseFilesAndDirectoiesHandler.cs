@@ -15,6 +15,7 @@
 
         public virtual IEnumerable<FileView> GetAllFilesAndDirectories()
         {     
+
             try
             {
                 if (!_directory.Exists)
