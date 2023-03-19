@@ -9,9 +9,13 @@ namespace FileSystemObserver_Api.Controllers
     {
         private readonly IFileSystemService _service;
 
-        public FileSystemController(IFileSystemService service)
+        private readonly ILogger<FileSystemController> _logger;
+
+        public FileSystemController(IFileSystemService service, ILogger<FileSystemController> logger)
         {
             _service = service;
+
+            _logger = logger;
         }
 
         /// <summary>
@@ -22,10 +26,14 @@ namespace FileSystemObserver_Api.Controllers
         [HttpGet]
         public IActionResult GetFilesInDefaultPath()
         {
+            _logger.LogInformation("Run GetFilesInDefaultPath method!");
+
             var response = _service.GetAllFilesAndDirectoriesInDefaultPath();
 
             if (response == null)
             {
+                _logger.LogInformation("Has null response from _service!");
+
                 return NotFound("Incorrect default path. Please, check the path in config.json file.");
             }
 
@@ -42,12 +50,18 @@ namespace FileSystemObserver_Api.Controllers
         [Route("/api/[controller]/directory")]
         public IActionResult GetFilesInDirectory(string fullPath)
         {
+            _logger.LogInformation($"Run GetFilesInDirectory method with param={fullPath}");
+
             var response = _service.GetAllFilesAndDirectoriesInCurrentPath(fullPath);
 
             if (response == null)
             {
+                _logger.LogWarning("Has null response from _service!");
+
                 return BadRequest("Path incorrect!");
             }
+
+            _logger.LogInformation($"Succesfull has colection: {response.GetType()}");
 
             return Ok(response);
         }
@@ -62,12 +76,18 @@ namespace FileSystemObserver_Api.Controllers
         [Route("/api/[controller]/parent")]
         public IActionResult GetFilesInParentDirectory(string fullPath)
         {
+            _logger.LogInformation($"Run GetFilesInParentDirectory() method with param={fullPath}");
+
             var response = _service.GetAllFilesAndDirectoriesInParent(fullPath);
 
             if (response == null)
             {
+                _logger.LogWarning("Has null response from _service!");
+
                 return BadRequest("Path incorrect!");
             }
+
+            _logger.LogInformation($"Succesfull has colection: {response.GetType()}");
 
             return Ok(response);
         }
@@ -84,12 +104,18 @@ namespace FileSystemObserver_Api.Controllers
         [Route("/api/[controller]/directory/filter")]
         public IActionResult GetFilteredListOfFiles(string fullPath, string filter)
         {
+            _logger.LogInformation($"Run GetFilteredListOfFiles() method with params[ fullPath={fullPath}, filter={filter} ]");
+
             var response = _service.GetFilteredListOfFiles(fullPath, filter);
 
             if (response == null)
             {
+                _logger.LogWarning("Has null response from _service!");
+
                 return BadRequest("No existing files by this filter or incorrect path!");
             }
+
+            _logger.LogInformation($"Succesfull has colection: {response.GetType()}");
 
             return Ok(response);
         }

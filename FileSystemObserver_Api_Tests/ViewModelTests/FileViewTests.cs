@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileSystemObserver_Api_Tests.ViewModelTests
+﻿namespace FileSystemObserver_Api_Tests.ViewModelTests
 {
     public class FileViewTests
     {
