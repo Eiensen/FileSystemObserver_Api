@@ -6,8 +6,6 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using NLog.Web;
 using NLog;
-using System;
-using NLog.Fluent;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
