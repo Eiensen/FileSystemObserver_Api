@@ -7,6 +7,7 @@ using System.Reflection;
 using NLog.Web;
 using NLog;
 using System;
+using NLog.Fluent;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
@@ -42,6 +43,12 @@ try
     builder.Logging.ClearProviders();
 
     builder.Host.UseNLog();
+
+    builder.Services.AddLogging(logBuilder =>
+    {
+        logBuilder.AddConsole();
+        logBuilder.AddDebug();
+    });
 
     var app = builder.Build();
 
