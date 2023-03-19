@@ -27,8 +27,4 @@
     <ProjectReference Include="..\FileSystemObserver_Api\FileSystemObserver_Api.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ServiciesTests\" />
-  </ItemGroup>
-
 </Project>
