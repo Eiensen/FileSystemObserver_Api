@@ -1,10 +1,10 @@
 ﻿namespace FileSystemObserver_Api.Handlers
 {
-    public class FilteredFilesInCurrentPath: BaseFilesAndDirectoiesHandler
+    public class FilteredFilesInPath: FilesAndDirectoies
     {
         private readonly string _filterBy;
 
-        public FilteredFilesInCurrentPath(string path, string filterBy): base(path)
+        public FilteredFilesInPath(string path, string filterBy): base(path)
         {
             _filterBy = filterBy;
         }

@@ -36,7 +36,7 @@ namespace FileSystemObserver_Api_Tests.ServiciesTests
             A.CallTo(() => handler.GetAllFilesAndDirectories()).Returns(response);
 
             //Act
-            var result = _service.GetAllFilesAndDirectoriesInPath();
+            var result = _service.GetAllFilesAndDirectoriesInDefaultPath();
 
             //Assert
             result.Should().BeNull();
@@ -69,7 +69,7 @@ namespace FileSystemObserver_Api_Tests.ServiciesTests
             //Arrenge
             var filterBy = "sys";
 
-            var handler = A.Fake<FilteredFilesInCurrentPath>(x => x.WithArgumentsForConstructor(() => new FilteredFilesInCurrentPath(_path, filterBy)));
+            var handler = A.Fake<FilteredFilesInPath>(x => x.WithArgumentsForConstructor(() => new FilteredFilesInPath(_path, filterBy)));
 
             var response = A.Fake<IEnumerable<FileView>>();
 

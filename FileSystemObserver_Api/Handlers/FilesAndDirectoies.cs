@@ -1,12 +1,12 @@
 ﻿namespace FileSystemObserver_Api.Handlers
 {
-    public class BaseFilesAndDirectoiesHandler
+    public class FilesAndDirectoies
     {
         protected List<FileView> _files;
 
         protected DirectoryInfo _directory;
 
-        public BaseFilesAndDirectoiesHandler(string path)
+        public FilesAndDirectoies(string path)
         {
             _directory = new DirectoryInfo(path);
 

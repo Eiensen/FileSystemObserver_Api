@@ -23,10 +23,10 @@
             //Arrenge
             var response = A.Fake<IEnumerable<FileView>>();
 
-            A.CallTo(() => _service.GetAllFilesAndDirectoriesInPath()).Returns(response);
+            A.CallTo(() => _service.GetAllFilesAndDirectoriesInDefaultPath()).Returns(response);
 
             //Act
-            var result = _controller.GetFilesInDefaultPath();
+            var result = _controller.GetAllFilesAndDirectories();
 
             //Assert
             result.Should().NotBeNull();

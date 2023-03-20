@@ -15,17 +15,21 @@
 
         public IEnumerable<FileView> GetAllFilesAndDirectoriesInPath(string? path, string? filter)
         {
-            if (String.IsNullOrEmpty(path))
+            if (!String.IsNullOrEmpty(path) && String.IsNullOrEmpty(filter))
             {              
-                return new BaseFilesAndDirectoiesHandler(_defaultPath).GetAllFilesAndDirectories();
+                return new FilesAndDirectoies(path).GetAllFilesAndDirectories();
             }
-            else if (String.IsNullOrEmpty(filter))
+            else if (!String.IsNullOrEmpty(filter) && !String.IsNullOrEmpty(path))
             {
-                return new FilteredFilesInCurrentPath(path, filter).GetAllFilesAndDirectories();
+                return new FilteredFilesInPath(path, filter).GetAllFilesAndDirectories();
+            }
+            else if (!String.IsNullOrEmpty(filter) && String.IsNullOrEmpty(path))
+            {
+                return new FilteredFilesInPath(_defaultPath, filter).GetAllFilesAndDirectories();
             }
             else
             {
-                return new BaseFilesAndDirectoiesHandler(path).GetAllFilesAndDirectories();
+                return new FilesAndDirectoies(_defaultPath).GetAllFilesAndDirectories();
             }
         }        
     }
