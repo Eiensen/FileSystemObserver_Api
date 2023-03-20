@@ -51,25 +51,7 @@
             _logger.LogError($"The object {handler.GetType()} is null!");
 
             return null;
-        }
-
-        public IEnumerable<FileView> GetAllFilesAndDirectoriesInParent(string dirPath)
-        {
-            _logger.LogInformation($"Start GetAllFilesAndDirectoriesInParent() method with path = {dirPath}");
-
-            var handler = new FilesAndDirectoriesInParentDirectory(dirPath);
-
-            if (handler != null)
-            {
-                var files = handler.GetAllFilesAndDirectories();
-
-                return files;
-            }
-
-            _logger.LogError($"The object {handler.GetType()} is null!");
-
-            return null;
-        }
+        }       
 
         public IEnumerable<FileView> GetFilteredListOfFiles(string dirPath, string filter)
         {

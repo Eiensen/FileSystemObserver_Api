@@ -64,28 +64,6 @@ namespace FileSystemObserver_Api_Tests.ServiciesTests
         }
 
         [Fact]
-        public void FileSystemService_GetAllFilesAndDirectoriesInParent_ReturnList()
-        {
-            //Arrenge
-            var pathForParent = @"C:\windows";
-
-            var handler = A.Fake<FilesAndDirectoriesInParentDirectory>(x => x.WithArgumentsForConstructor(() => new FilesAndDirectoriesInParentDirectory(pathForParent)));
-
-            var response = A.Fake<IEnumerable<FileView>>();
-
-            var manager = Fake.GetFakeManager(handler);
-
-            A.CallTo(() => handler.GetAllFilesAndDirectories()).Returns(response);
-
-            //Act
-            var result = _service.GetAllFilesAndDirectoriesInParent(pathForParent);
-
-            //Assert
-            result.Should().Contain(x => x.FullName.Contains("C:"));
-            Assert.Equal(handler, manager.Object);
-        }
-
-        [Fact]
         public void FileSystemService_GetFilteredListOfFiles_ReturnList()
         {
             //Arrenge

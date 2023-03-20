@@ -65,32 +65,6 @@
         }
 
         /// <summary>
-        /// Запрос на получение всех папок и файлов в предыдущей папке от указанного пути.
-        /// </summary>
-        /// <param name="fullPath">Текущий полный путь</param>
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet]
-        [Route("/api/[controller]/parent")]
-        public IActionResult GetFilesInParentDirectory(string fullPath)
-        {
-            _logger.LogInformation($"Run GetFilesInParentDirectory() method with param={fullPath}");
-
-            var response = _service.GetAllFilesAndDirectoriesInParent(fullPath);
-
-            if (response == null)
-            {
-                _logger.LogWarning("Has null response from _service!");
-
-                return BadRequest("Path incorrect!");
-            }
-
-            _logger.LogInformation($"Succesfull has colection: {response.GetType()}");
-
-            return Ok(response);
-        }
-
-        /// <summary>
         /// Запрос на получение отфильтрованных файлов по заданному пути
         /// </summary>
         /// <param name="fullPath">Полный путь до файла или папки</param>

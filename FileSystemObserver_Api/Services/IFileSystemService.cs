@@ -8,8 +8,6 @@ namespace FileSystemObserver_Api.Services
 
         IEnumerable<FileView> GetAllFilesAndDirectoriesInCurrentPath(string dirPath);
 
-        IEnumerable<FileView> GetAllFilesAndDirectoriesInParent(string dirPath);
-
         IEnumerable<FileView> GetFilteredListOfFiles(string dirPath, string filter);
     }
 }
