@@ -23,7 +23,7 @@
             //Arrenge
             var response = A.Fake<IEnumerable<FileView>>();
 
-            A.CallTo(() => _service.GetAllFilesAndDirectoriesInDefaultPath()).Returns(response);
+            A.CallTo(() => _service.GetAllFilesAndDirectoriesInPath()).Returns(response);
 
             //Act
             var result = _controller.GetFilesInDefaultPath();

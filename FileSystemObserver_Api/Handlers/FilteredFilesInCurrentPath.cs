@@ -23,14 +23,7 @@
                     _files.Add(new FileView() { FullName = file.FullName, Name = file.Name });
                 }
 
-                if (_files.Count > 0)
-                {
-                    return _files;
-                }
-                else
-                {
-                    return null;
-                }
+                return _files;
             }
             catch (Exception ex)
             {

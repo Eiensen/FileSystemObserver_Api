@@ -26,7 +26,7 @@
         {
             _logger.LogInformation("Run GetFilesInDefaultPath method!");
 
-            var response = _service.GetAllFilesAndDirectoriesInDefaultPath();
+            var response = _service.GetAllFilesAndDirectoriesInPath();
 
             if (response == null)
             {
