@@ -6,11 +6,15 @@
 
         private readonly FileSystemController _controller;
 
+        private readonly ILogger<FileSystemController> _logger;
+
         public FileSystemControllerTests() 
         {
             _service = A.Fake<IFileSystemService>();
 
-            _controller = new FileSystemController(_service);
+            _logger = A.Fake<ILogger<FileSystemController>>();
+
+            _controller = new FileSystemController(_service, _logger);
         }
 
         [Fact]

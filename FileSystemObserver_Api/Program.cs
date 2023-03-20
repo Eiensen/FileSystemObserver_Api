@@ -2,10 +2,10 @@ global using FileSystemObserver_Api.Services;
 global using FileSystemObserver_Api.ViewModels;
 global using Microsoft.AspNetCore.Mvc;
 global using FileSystemObserver_Api.Handlers;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
-using NLog.Web;
-using NLog;
+global using Microsoft.OpenApi.Models;
+global using System.Reflection;
+global using NLog.Web;
+global using NLog;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 

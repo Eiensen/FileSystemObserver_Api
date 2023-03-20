@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-
-namespace FileSystemObserver_Api.Controllers
+﻿namespace FileSystemObserver_Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]

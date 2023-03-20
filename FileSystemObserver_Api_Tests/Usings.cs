@@ -6,3 +6,4 @@ global using FileSystemObserver_Api.ViewModels;
 global using FluentAssertions;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.Logging;

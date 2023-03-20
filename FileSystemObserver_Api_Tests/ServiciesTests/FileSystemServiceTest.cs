@@ -8,13 +8,17 @@ namespace FileSystemObserver_Api_Tests.ServiciesTests
 
         private readonly IConfiguration _configuration;
 
+        private readonly ILogger<FileSystemService> _logger;
+
         private readonly string _path;
 
         public FileSystemServiceTest()
         {
             _configuration = A.Fake<IConfiguration>();
 
-            _service = new FileSystemService(_configuration);
+            _logger = A.Fake<ILogger<FileSystemService>>();
+
+            _service = new FileSystemService(_configuration, _logger);
 
             _path = "C:";
         }
