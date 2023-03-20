@@ -13,7 +13,7 @@
             _files = new List<FileView>();
         }
 
-        public virtual IEnumerable<FileView> GetAllFilesAndDirectories()
+        public virtual IEnumerable<FileView> GetAllFilesAndDirectories(string? filter)
         {     
 
             try
@@ -23,17 +23,30 @@
                     return null;
                 }
 
-                foreach (var dir in _directory.GetDirectories())
+                if(filter == null)
                 {
-                    _files.Add(new FileView() { FullName = dir.FullName, Name = dir.Name });
-                }
+                    foreach (var dir in _directory.GetDirectories())
+                    {
+                        _files.Add(new FileView() { FullName = dir.FullName, Name = dir.Name });
+                    }
 
-                foreach (var file in _directory.GetFiles())
+                    foreach (var file in _directory.GetFiles())
+                    {
+                        _files.Add(new FileView() { FullName = file.FullName, Name = file.Name });
+                    }
+
+                    return _files;
+                }
+                else
                 {
-                    _files.Add(new FileView() { FullName = file.FullName, Name = file.Name });
-                }
+                    foreach (var file in _directory.EnumerateFiles($"*.{filter}"))
+                    {
+                        _files.Add(new FileView() { FullName = file.FullName, Name = file.Name });
+                    }
 
-                return _files;
+                    return _files;
+                }
+                
             }
             catch (Exception ex)
             {

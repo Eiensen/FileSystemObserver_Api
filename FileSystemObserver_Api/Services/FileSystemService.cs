@@ -13,24 +13,7 @@
             _defaultPath = _configuration.GetSection("defaultPath").Value;
         }
 
-        public IEnumerable<FileView> GetAllFilesAndDirectoriesInPath(string? path, string? filter)
-        {
-            if (!String.IsNullOrEmpty(path) && String.IsNullOrEmpty(filter))
-            {              
-                return new FilesAndDirectoies(path).GetAllFilesAndDirectories();
-            }
-            else if (!String.IsNullOrEmpty(filter) && !String.IsNullOrEmpty(path))
-            {
-                return new FilteredFilesInPath(path, filter).GetAllFilesAndDirectories();
-            }
-            else if (!String.IsNullOrEmpty(filter) && String.IsNullOrEmpty(path))
-            {
-                return new FilteredFilesInPath(_defaultPath, filter).GetAllFilesAndDirectories();
-            }
-            else
-            {
-                return new FilesAndDirectoies(_defaultPath).GetAllFilesAndDirectories();
-            }
-        }        
+        public IEnumerable<FileView> GetAllFilesAndDirectoriesInPath(string? path, string? filter) =>
+            new FilesAndDirectoies(path ?? _defaultPath).GetAllFilesAndDirectories(filter);        
     }
 }
