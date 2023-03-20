@@ -36,7 +36,7 @@ namespace FileSystemObserver_Api_Tests.ServiciesTests
             A.CallTo(() => handler.GetAllFilesAndDirectories()).Returns(response);
 
             //Act
-            var result = _service.GetAllFilesAndDirectoriesInDefaultPath();
+            var result = _service.GetAllFilesAndDirectoriesInPath();
 
             //Assert
             result.Should().BeNull();
