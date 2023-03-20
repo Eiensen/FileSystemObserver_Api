@@ -7,3 +7,4 @@ global using FluentAssertions;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.Logging;
+global using FileSystemObserver_Api.Handlers;

@@ -1,7 +1,4 @@
-﻿using FileSystemObserver_Api.Handlers;
-using NLog.Filters;
-
-namespace FileSystemObserver_Api_Tests.ServiciesTests
+﻿namespace FileSystemObserver_Api_Tests.ServiciesTests
 {
     public class FileSystemServiceTest
     {
