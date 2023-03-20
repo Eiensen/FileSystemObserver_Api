@@ -14,6 +14,6 @@
         }
 
         public IEnumerable<FileView> GetAllFilesAndDirectoriesInPath(string? path, string? filter) =>
-            new FilesAndDirectoies(path ?? _defaultPath).GetAllFilesAndDirectories(filter);        
+            new FilesAndDirectories(path ?? _defaultPath).GetAllFilesAndDirectories(filter);        
     }
 }

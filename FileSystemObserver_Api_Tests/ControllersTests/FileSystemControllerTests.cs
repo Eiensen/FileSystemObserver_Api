@@ -8,7 +8,7 @@
 
         private readonly ILogger<FileSystemController> _logger;
 
-        public FileSystemControllerTests() 
+        public FileSystemControllerTests()
         {
             _service = A.Fake<IFileSystemService>();
 
@@ -18,16 +18,17 @@
         }
 
         [Fact]
-        public void FileSystemController_GetFilesInDefaultPath_ReturnOk()
+        public void FileSystemController_GetAllFilesAndDirectories_ReturnOk()
         {
             //Arrenge
-           
+            var path = string.Empty;
+            var filter = string.Empty;
 
             //Act
-           
+            var result = _controller.GetAllFilesAndDirectories(path, filter);
 
             //Assert
-           
-        }       
+            result.Should().BeOfType(typeof(OkObjectResult));
+        }
     }
 }
